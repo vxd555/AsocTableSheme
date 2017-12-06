@@ -8,6 +8,10 @@
 
 using namespace std;
 
+template <class Key, class ClassType> class map_template;
+
+template <class Key, class ClassType> ostream& operator<<(ostream& out, const map_template<Key, ClassType>& mt);
+
 template <class Key, class ClassType> class map_template
 {
 	public: 
@@ -29,13 +33,13 @@ template <class Key, class ClassType> class map_template
     		return data.size();
     	}
     	
-    	Item *Find(Key key)
+    	ClassType *Find(Key key)
     	{
     		for(int i = 0; i < Size(); ++i)
     		{
     			if(data[i].key == key)
     			{
-    				return &data[i];
+    				return &data[i].value;
     			}
     		}
     		return nullptr;
@@ -59,21 +63,25 @@ template <class Key, class ClassType> class map_template
 		{
 		
 		}
+		map_template(const map_template& mt)
+		{
+			data = mt.data;
+		}
 		~map_template()
     	{
     		Clear();
     	}
     	
-    	friend ostream& operator<< <>(ostream& out, const map_template<Key, ClassType>& mt);
+    	friend ostream& operator<< <Key, ClassType>(ostream& out, const map_template<Key, ClassType>& mt);
 		
 
 };
-template <class Key, class ClassType> ostream& operator<<(ostream& out, const map_template<Key, ClassType>& mt)
+template <class Key, class ClassType>
+ostream& operator<<(ostream& out, const map_template<Key, ClassType>& mt)
 {
 	for(int i = 0; i < mt.Size(); ++i)
 	{
-		cout<<"test ";
-		//cout << mt.data[i].value << "\n";
+		cout << mt.data[i].value << "\n";
 	}
 	return out;
 }

@@ -22,7 +22,7 @@ int main(void)
 
 	cout << Database << endl;							//Print databese
 
-/*	map_template<ID, Employee> NewDatabase = Database;	//Make a copy of database
+	map_template<ID, Employee> NewDatabase = Database;	//Make a copy of database
 	
 	Employee* pE;
 	pE = NewDatabase.Find(510212881);					//Find employee using its ID

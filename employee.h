@@ -6,47 +6,52 @@
 
 using namespace std;
 
+class Employee;
+class Manager;
+ostream& operator<< (ostream &o, const Employee& em);
+ostream& operator<< (ostream &o, const Manager& ma);
+
 class Employee
 {
-	protected:
-	string name;
-	string department;
-	int id;
 	public:
+		string name;
+		string Position;
+		int Age;
+	
 		Employee()
 		{
 			name = "";
-			department = "";
-			id = 0;
+			Position = "";
+			Age = 0;
 		}
-		Employee (const string n, const string d, int ident): name (n), department (d), id(ident)
+		Employee (const string n, const string d, int age): name (n), Position (d), Age(age)
 		{
 
 		}
 		Employee(const Employee& em)
 		{
 			name = (const string)em.name;
-			department = (const string)em.department;
-			id = em.id;
+			Position = (const string)em.Position;
+			Age = em.Age;
 		}
 		virtual void print() const
 		{
-			cout << name << '\t' << department << '\t' << id << endl;
+			cout << name << '\t' << Position << '\t' <<Age << endl;
 		}
-		//friend ostream& operator<< (ostream &o, const Employee& em);
+		friend ostream& operator<< (ostream &o, const Employee& em);
 };
 
-/*ostream& operator<< (ostream &o, const Employee& em)
+ostream& operator<< (ostream &o, const Employee& em)
 {
 	em.print();
 	return o;
-}*/
+}
 
 class Manager:public Employee
 {
 	int level;
 	public:
-		Manager (const string n, const string d, int ident, int l):Employee(n, d, ident), level (l)	
+		Manager (const string n, const string d, int age, int l):Employee(n, d, age), level (l)	
 		{
 		};
 		void print () const override
@@ -54,14 +59,14 @@ class Manager:public Employee
 			Employee::print ();
 			cout << "\tlevel" << level << endl;
 		}
-		//friend ostream& operator<< (ostream &o, const Manager& ma);
+		friend ostream& operator<< (ostream &o, const Manager& ma);
 };
 
-/*ostream& operator<< (ostream &o, const Manager& ma)
+ostream& operator<< (ostream &o, const Manager& ma)
 {
 	ma.print();
 	return o;
-}*/
+}
 
 
 void print_list(set < Employee * >&s)

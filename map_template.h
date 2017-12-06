@@ -8,17 +8,17 @@
 
 using namespace std;
 
-template <class Key, class ClassType> class map_template;
-
-template <class Key, class ClassType> ostream& operator<<(ostream& out, const map_template<Key, ClassType>& mt);
-
 template <class Key, class ClassType> class map_template
 {
 	public: 
-		struct Item
+		class Item
 		{
-		    ClassType value;
-		    Key key;
+			public:
+				ClassType value;
+				Key key;
+
+				Item(const Key& k, const ClassType& val) : value(val), key(k) {}
+		    
 		};
 		vector<Item> data;
 		
@@ -45,16 +45,14 @@ template <class Key, class ClassType> class map_template
     		return nullptr;
     	}
     
-		void Add(Key key, ClassType val)
+		void Add(const Key& key, const ClassType& val)
 		{
 			if(Find(key))
 			{
 				cout << "klucz juz znajduje sie w bazie\n";
 				return;
 			}
-			Item tempItem;
-			tempItem.key = key;
-			tempItem.value = val;
+			Item tempItem(key, val);
 			data.push_back(tempItem);
 			return;
 		}
@@ -72,151 +70,15 @@ template <class Key, class ClassType> class map_template
     		Clear();
     	}
     	
-    	friend ostream& operator<< <Key, ClassType>(ostream& out, const map_template<Key, ClassType>& mt);
-		
-
-};
-template <class Key, class ClassType>
-ostream& operator<<(ostream& out, const map_template<Key, ClassType>& mt)
-{
-	for(int i = 0; i < mt.Size(); ++i)
-	{
-		cout << mt.data[i].value << "\n";
-	}
-	return out;
-}
-
-/*template <class Key, class Value> class assocTab
-{
-	private:
-		struct node
-		{
-			node *next;
-			char *key;
-			int val;
-			node (const char *k):next (NULL)
+    	friend ostream& operator<< (ostream& out, const map_template<Key, ClassType>& mt)
+    	{
+    		for(int i = 0; i < mt.Size(); ++i)
 			{
-				key = new char[strlen (k) + 1];
-				strcpy (key, k);
-			};
-			~node ()
-			{
-				delete[]key;
+				cout << mt.data[i].value << "\n";
 			}
-			node (const node & s):next (NULL)
-			{
-				if (s.key == NULL)
-					key = NULL;
-				else
-				{
-					key = new char[strlen (s.key) + 1];
-					strcpy (key, s.key);
-				}
-				val=s.val;
-			};
-			private:			//assignment not allowed
-				node & operator= (const node &);
-		};
-	node *head;
-	void insert (const char *key, int value);
-	void clear ();
-	node *find (const char *key) const;
-	void swap (assocTab & l);
-	public:
-	assocTab ();
-	assocTab (const assocTab & l);
-	assocTab & operator= (const assocTab & l);
-	~assocTab ();
-	int &operator[] (const char *);
+			return out;
+    	}
 };
 
-assocTab::assocTab ()
-{
-	head = NULL;
-}
-
-void assocTab::clear ()
-{
-	while (head)
-	{
-		node *t = head->next;
-		delete head;
-		head = t;
-	};
-}
-
-assocTab::~assocTab ()
-{
-	clear ();
-}
-
-void assocTab::insert (const char *key, int value)
-{
-	node *nowy = new node (key);
-	nowy->next = head;
-	head = nowy;
-	head->val = value;
-}
-
-void assocTab::swap (assocTab & l)
-{
-	node *t = head;
-	head = l.head;
-	l.head = t;
-}
-
-
-assocTab::assocTab (const assocTab & l)
-{
-	node *src, **dst;
-	head = NULL;
-	src = l.head;
-	dst = &head;
-	try
-	{
-		while (src)
-		{
-			*dst = new node (*src);
-			src = src->next;
-			dst = &((*dst)->next);
-		}
-	}
-	catch (...)
-	{
-		clear ();
-		throw;
-	};
-}
-
-assocTab & assocTab::operator= (const assocTab & l)
-{
-	if (&l == this)
-	return *this;
-	assocTab t (l);
-	swap (t);
-	return *this;
-}
-
-assocTab::node * assocTab::find (const char *key) const
-{
-	node * c = head;
-	while (c)
-	{
-		if (!strcmp (c->key, key)) return c;
-		c = c->next;
-	};
-	return NULL;
-}
-
-int &assocTab::operator[] (const char *key)
-{
-	node *c = find (key);
-	if (!c)
-	{
-		insert (key, 0);
-		c = head;
-	};
-	return c->val;
-}*/
 
 #endif /* __ASSOCTAB_H__ */

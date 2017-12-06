@@ -33,14 +33,14 @@ class Employee
 		{
 			cout << name << '\t' << department << '\t' << id << endl;
 		}
-		//friend ostream& operator<< (ostream &o, const Employee& em);
+		friend ostream& operator<< (ostream &o, const Employee& em);
 };
 
-/*ostream& operator<< (ostream &o, const Employee& em)
+ostream& operator<< (ostream &o, const Employee& em)
 {
 	em.print();
 	return o;
-}*/
+}
 
 class Manager:public Employee
 {
@@ -54,14 +54,14 @@ class Manager:public Employee
 			Employee::print ();
 			cout << "\tlevel" << level << endl;
 		}
-		//friend ostream& operator<< (ostream &o, const Manager& ma);
+		friend ostream& operator<< (ostream &o, const Manager& ma);
 };
 
-/*ostream& operator<< (ostream &o, const Manager& ma)
+ostream& operator<< (ostream &o, const Manager& ma)
 {
 	ma.print();
 	return o;
-}*/
+}
 
 
 void print_list(set < Employee * >&s)

@@ -4,10 +4,81 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
+#include <fstream>
 
 using namespace std;
 
-class assocTab
+template <class Key, class ClassType> class map_template
+{
+	public: 
+		struct Item
+		{
+		    ClassType value;
+		    Key key;
+		};
+		vector<Item> data;
+		
+    	void Clear()
+    	{
+    		data.clear();
+    		return;
+    	}
+    	
+    	int Size() const
+    	{
+    		return data.size();
+    	}
+    	
+    	Item *Find(Key key)
+    	{
+    		for(int i = 0; i < Size(); ++i)
+    		{
+    			if(data[i].key == key)
+    			{
+    				return &data[i];
+    			}
+    		}
+    		return nullptr;
+    	}
+    
+		void Add(Key key, ClassType val)
+		{
+			if(Find(key))
+			{
+				cout << "klucz juz znajduje sie w bazie\n";
+				return;
+			}
+			Item tempItem;
+			tempItem.key = key;
+			tempItem.value = val;
+			data.push_back(tempItem);
+			return;
+		}
+		
+		map_template()
+		{
+		
+		}
+		~map_template()
+    	{
+    		Clear();
+    	}
+    	
+    	friend ostream& operator<< <>(ostream& out, const map_template<class Key, class ClassType>& mt);
+		
+
+};
+template <class Key, class ClassType> ostream& operator<<(ostream& out, const map_template<class Key, class ClassType>& mt)
+{
+	for(int i = 0; i < mt.Size(); ++i)
+	{
+		cout<<"test ";
+		//cout << mt.data[i].value << "\n";
+	}
+	return out;
+}
+
+/*template <class Key, class Value> class assocTab
 {
 	private:
 		struct node
@@ -138,6 +209,6 @@ int &assocTab::operator[] (const char *key)
 		c = head;
 	};
 	return c->val;
-}
+}*/
 
 #endif /* __ASSOCTAB_H__ */
